@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>라면 끓이기</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <style>
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+      * {
+        font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+          Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
+          "Noto Sans KR", "Malgun Gothic", sans-serif;
+      }
+
+      body {
+        background-color: #191919;
+        color: white;
+      }
+
+      h1 {
+        text-align: center;
+
+        font-size: 40px;
+
+        margin-top: 250px;
+      }
+
+      p {
+        text-align: center;
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      #btn {
+        font-weight: bold;
+
+        font-size: 30px;
+
+        width: 300px;
+        height: 100px;
+
+        border-radius: 20px;
+
+        margin-top: 350px;
+        margin-left: auto;
+
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        font-family: Pretendard;
+      }
+
+      #show {
+        animation: fadein-clock 2s;
+        animation-fill-mode: forwards;
+      }
+
+      .clock {
+        margin: 500px auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 500px;
+        height: 100px;
+
+        display: none;
+
+        font-size: 64px;
+        color: #191919;
+        border: 2px solid #999;
+        border-radius: 20px;
+        text-align: center;
+
+        background-color: white;
+      }
+
+      .fade-in {
+        animation: fadein 1.25s;
+        animation-fill-mode: forwards;
+      }
+
+      .fade-out {
+        animation: fadeout 1.25s;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes fadeout {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadein {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(0, -50px);
+        }
+      }
+
+      @keyframes fadein-clock {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 456px) {
+        .title {
+          margin-top: 150px;
+        }
+
+        p {
+          font-size: 12px;
+        }
+
+        #btn {
+          width: 200px;
+          margin-top: 150px;
+        }
+
+        .clock {
+          width: 200px;
+          margin-top: 350px;
+        }
+
+        @keyframes fadein {
+          from {
+            transform: translate(0, 0);
+          }
+          to {
+            transform: translate(0, -30px);
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">라면 끓이기</h1>
+    <p class="">
+      본 사이트는 라면 끓이는 시간을 보여주는 사이트입니다.<br />라면 끓이는
+      시간 기준은 3분 30초로 개인 취향과 맞지 않을 수 있습니다.
+    </p>
+    <div class="clock" id=""></div>
+    <button type="button" class="btn btn-light" id="btn" onclick="start()">
+      시작하기
+    </button>
+
+    <script>
+      const button = document.querySelector("#btn");
+      const title = document.querySelector("h1");
+      const paragraph = document.querySelector("p");
+      const clock = document.querySelector(".clock");
+
+      var time = 210;
+      var min = "";
+      var sec = "";
+
+      function start() {
+        title.className += " fade-in";
+        button.className += " fade-out";
+        paragraph.className += "fade-in";
+        clock.id += "show";
+        clock.style.display = "block";
+
+        var x = setInterval(function () {
+          min = String(parseInt(time / 60)).padStart(2, "0");
+          sec = String(parseInt(time % 60)).padStart(2, "0");
+
+          clock.innerText = `${min}:${sec}`;
+          time -= 1;
+
+          if (time < 0) {
+            clearInterval(x);
+            clock.innerText = "END";
+          }
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
